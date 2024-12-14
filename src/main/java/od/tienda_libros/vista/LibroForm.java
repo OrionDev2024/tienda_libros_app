@@ -7,6 +7,8 @@ import org.springframework.stereotype.Component;
 import javax.swing.*;
 import javax.swing.table.DefaultTableModel;
 import java.awt.*;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 
 @Component
 public class LibroForm extends JFrame {
@@ -14,12 +16,28 @@ public class LibroForm extends JFrame {
     LibroServicio libroServicio;
     private JPanel panel;
     private JTable tablaLibros;
+    private JTextField libroTexto;
+    private JTextField autorTexto;
+    private JTextField precioTexto;
+    private JTextField existenciasTexto;
+    private JButton agregarButton;
+    private JButton modificarButton;
+    private JButton eliminarButton;
     private DefaultTableModel tablaModeloLibros;
 
     @Autowired
     public LibroForm(LibroServicio libroServicio){
         this.libroServicio = libroServicio;
         iniciarForma();
+        agregarButton.addActionListener(e -> {
+
+        });
+        modificarButton.addActionListener(e -> {
+
+        });
+        eliminarButton.addActionListener(e -> {
+
+        });
     }
 
     private void iniciarForma(){
