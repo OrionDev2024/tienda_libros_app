@@ -1,5 +1,6 @@
 package od.tienda_libros.vista;
 
+import od.tienda_libros.modelo.Libro;
 import od.tienda_libros.servicio.LibroServicio;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
@@ -29,9 +30,7 @@ public class LibroForm extends JFrame {
     public LibroForm(LibroServicio libroServicio){
         this.libroServicio = libroServicio;
         iniciarForma();
-        agregarButton.addActionListener(e -> {
-
-        });
+        agregarButton.addActionListener(e -> agregarLibro());
         modificarButton.addActionListener(e -> {
 
         });
@@ -52,6 +51,37 @@ public class LibroForm extends JFrame {
         setLocation(x,y);
     }
 
+    private void agregarLibro(){
+        //Leer los valores del formulario
+        if (libroTexto.getText().equals("")) {
+            mostrarMensaje("Proporciona el nombre del libro");
+            libroTexto.requestFocusInWindow();
+            return;
+        }
+        var nombreLibro = libroTexto.getText();
+        var autor = autorTexto.getText();
+        var precio = Double.parseDouble(precioTexto.getText());
+        var existencias = Integer.parseInt(existenciasTexto.getText());
+        //Crear el objeto libro
+        var libro = new Libro();
+        libro.setNombreLibro(nombreLibro);
+        libro.setAutor(autor);
+        libro.setPrecio(precio);
+        libro.setExistencias(existencias);
+        this.libroServicio.guardarLibro(libro);
+        mostrarMensaje("Se agrego el libro...");
+        limpiarFormulario();
+        listarLibros();
+    }
+    private void limpiarFormulario(){
+        libroTexto.setText("");
+        autorTexto.setText("");
+        precioTexto.setText("");
+        existenciasTexto.setText("");
+    }
+    private void mostrarMensaje(String mensaje){
+        JOptionPane.showMessageDialog(this, mensaje);
+    }
     private void createUIComponents() {
         // TODO: place custom component creation code here
         this.tablaModeloLibros = new DefaultTableModel(0, 5);
