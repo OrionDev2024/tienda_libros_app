@@ -34,9 +34,7 @@ public class LibroForm extends JFrame {
         this.libroServicio = libroServicio;
         iniciarForma();
         agregarButton.addActionListener(e -> agregarLibro());
-        modificarButton.addActionListener(e -> {
-
-        });
+        modificarButton.addActionListener(e -> modificarLibro());
         eliminarButton.addActionListener(e -> {
 
         });
@@ -83,6 +81,29 @@ public class LibroForm extends JFrame {
         limpiarFormulario();
         listarLibros();
     }
+    private void modificarLibro(){
+        if (idTexto.getText().equals("")) {
+            mostrarMensaje("Selecciona el libro a modificar");
+            libroTexto.requestFocusInWindow();
+            return;
+        }
+        var idLibro = Integer.parseInt(idTexto.getText());
+        var nombreLibro = libroTexto.getText();
+        var autor = autorTexto.getText();
+        var precio = Double.parseDouble(precioTexto.getText());
+        var existencias = Integer.parseInt(existenciasTexto.getText());
+        //Crear el objeto libro
+        var libro = new Libro();
+        libro.setIdLibro(idLibro);
+        libro.setNombreLibro(nombreLibro);
+        libro.setAutor(autor);
+        libro.setPrecio(precio);
+        libro.setExistencias(existencias);
+        this.libroServicio.guardarLibro(libro);
+        mostrarMensaje("Se modificó el libro...");
+        limpiarFormulario();
+        listarLibros();
+    }
     private void cargarLibroSeleccionado(){
         //Los indices de las columnas de nuestra tabla, inician en 0
         var renglon = tablaLibros.getSelectedRow();
@@ -101,6 +122,7 @@ public class LibroForm extends JFrame {
         }
     }
     private void limpiarFormulario(){
+        idTexto.setText("");
         libroTexto.setText("");
         autorTexto.setText("");
         precioTexto.setText("");
