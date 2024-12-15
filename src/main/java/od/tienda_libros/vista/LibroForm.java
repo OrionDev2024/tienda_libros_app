@@ -27,6 +27,7 @@ public class LibroForm extends JFrame {
     private JButton agregarButton;
     private JButton modificarButton;
     private JButton eliminarButton;
+    private JButton limpiarFormularioButton;
     private DefaultTableModel tablaModeloLibros;
 
     @Autowired
@@ -35,9 +36,7 @@ public class LibroForm extends JFrame {
         iniciarForma();
         agregarButton.addActionListener(e -> agregarLibro());
         modificarButton.addActionListener(e -> modificarLibro());
-        eliminarButton.addActionListener(e -> {
-
-        });
+        eliminarButton.addActionListener(e -> eliminarLibro());
         tablaLibros.addMouseListener(new MouseAdapter() {
             @Override
             public void mouseClicked(MouseEvent e) {
@@ -45,7 +44,10 @@ public class LibroForm extends JFrame {
                 cargarLibroSeleccionado();
             }
         });
+        limpiarFormularioButton.addActionListener(e -> limpiarFormulario());
     }
+
+
 
     private void iniciarForma(){
         setContentPane(panel );
@@ -101,6 +103,19 @@ public class LibroForm extends JFrame {
         libro.setExistencias(existencias);
         this.libroServicio.guardarLibro(libro);
         mostrarMensaje("Se modificó el libro...");
+        limpiarFormulario();
+        listarLibros();
+    }
+    private void eliminarLibro() {
+        if (idTexto.getText().equals("")) {
+            mostrarMensaje("Selecciona el libro a eliminar");
+            libroTexto.requestFocusInWindow();
+            return;
+        }
+        var idLibro = Integer.parseInt(idTexto.getText());
+        Libro libro = new Libro(idLibro, null, null, null, null);
+        this.libroServicio.eliminarLibro(libro);
+        mostrarMensaje("Se elimino el libro...");
         limpiarFormulario();
         listarLibros();
     }
