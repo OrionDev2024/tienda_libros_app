@@ -155,7 +155,12 @@ public class LibroForm extends JFrame {
         idTexto = new JTextField("");
         idTexto.setVisible(false);
         //this.limpiarFormularioButton.setVisible(false);
-        this.tablaModeloLibros = new DefaultTableModel(0, 5);
+        this.tablaModeloLibros = new DefaultTableModel(0, 5){
+            @Override
+            public boolean isCellEditable(int row, int column){
+                return false;
+            }
+        };
         String[] cabeceros = {"Id", "Libro", "Autor", "Precio", "Existencias"};
         tablaModeloLibros.setColumnIdentifiers(cabeceros);
         //instanciamos el objeto JTable
