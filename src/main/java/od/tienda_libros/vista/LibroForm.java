@@ -124,6 +124,8 @@ public class LibroForm extends JFrame {
         var renglon = tablaLibros.getSelectedRow();
         if(renglon != -1){
             //Regresa -1 si no se selecciono nningun registro
+            this.agregarButton.setVisible(false);
+            limpiarFormularioButton.setVisible(true);
             String idLibro = tablaLibros.getModel().getValueAt(renglon, 0).toString();
             idTexto.setText(idLibro);
             String nombreLibro = tablaLibros.getModel().getValueAt(renglon, 1).toString();
@@ -142,6 +144,7 @@ public class LibroForm extends JFrame {
         autorTexto.setText("");
         precioTexto.setText("");
         existenciasTexto.setText("");
+        this.agregarButton.setVisible(true);
     }
     private void mostrarMensaje(String mensaje){
         JOptionPane.showMessageDialog(this, mensaje);
@@ -151,6 +154,7 @@ public class LibroForm extends JFrame {
         //Creamos el elemento idTexto oculto
         idTexto = new JTextField("");
         idTexto.setVisible(false);
+        //this.limpiarFormularioButton.setVisible(false);
         this.tablaModeloLibros = new DefaultTableModel(0, 5);
         String[] cabeceros = {"Id", "Libro", "Autor", "Precio", "Existencias"};
         tablaModeloLibros.setColumnIdentifiers(cabeceros);
